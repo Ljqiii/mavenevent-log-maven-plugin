@@ -8,10 +8,16 @@
     <artifactId>mavenevent-log-maven-plugin</artifactId>
     <version>1.0</version>
 
+    <scm>
+        <url>https://github.com/Ljqiii</url>
+        <connection>https://github.com/Ljqiii/mavenevent-log-maven-plugin.git</connection>
+    </scm>
+
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.version>3.6.0</maven.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <prerequisites>
@@ -31,8 +37,81 @@
         </dependency>
     </dependencies>
 
-    <build>
+    <developers>
+        <developer>
+            <name>Jiaqi Liang</name>
+            <id>Ljqiii</id>
+            <email>ljq917181927@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
 
+    <profiles>
+        <profile>
+            <id>release</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+
+        </profile>
+
+    </profiles>
+
+    <build>
+        <plugins>
+            <!-- Source -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- GPG -->
+            <plugin> <!-- 进行延签 -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
 
     </build>
 
